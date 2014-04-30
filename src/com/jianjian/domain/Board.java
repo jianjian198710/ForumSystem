@@ -1,16 +1,24 @@
 package com.jianjian.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Table(name="t_board")
 public class Board extends BaseDomain{
 	private static final long serialVersionUID = -9055154398864157958L;
 	@Id
@@ -23,6 +31,8 @@ public class Board extends BaseDomain{
 	private String boardDesc;
 	@Column(name="topic_num")
 	private int topicNum;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "manBoards", fetch = FetchType.LAZY)
+	private Set<User> users = new HashSet<User>();
 	
 	public int getBoardId(){
 		return boardId;
@@ -47,5 +57,11 @@ public class Board extends BaseDomain{
 	}
 	public void setTopicNum(int topicNum){
 		this.topicNum = topicNum;
+	}
+	public Set<User> getUsers(){
+		return users;
+	}
+	public void setUsers(Set<User> users){
+		this.users = users;
 	}
 }

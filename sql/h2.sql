@@ -32,7 +32,6 @@ create table t_post(post_id int(11) primary key,
 					post_title varchar(50), 
 					post_text text, 
 					create_time date,
-					FOREIGN KEY (board_id) REFERENCES t_board(board_id),
 					FOREIGN KEY (topic_id) REFERENCES t_topic(topic_id),
 					FOREIGN KEY (user_id) REFERENCES t_user(user_id));
 					
