@@ -1,4 +1,4 @@
-create table t_user(user_id int(11) primary key, 
+create table t_user(user_id int(11) primary key auto_increment, 
 					user_name varchar(30), 
 					password varchar(30), 
 					user_type tinyint(4),
@@ -7,12 +7,12 @@ create table t_user(user_id int(11) primary key,
 					last_visit datetime, 
 					last_ip varchar(20));
 					
-create table t_board(board_id int(11) primary key, 
+create table t_board(board_id int(11) primary key auto_increment, 
 					 board_name varchar(150), 
 					 board_desc varchar(255), 
 					 topic_num int(11));
 
-create table t_topic(topic_id int(11) primary key,
+create table t_topic(topic_id int(11) primary key auto_increment,
 					 board_id int(11), 
 					 topic_title varchar(100), 
 				     user_id int(11), 
@@ -24,7 +24,7 @@ create table t_topic(topic_id int(11) primary key,
 				     FOREIGN KEY (board_id) REFERENCES t_board(board_id),
 				     FOREIGN KEY (user_id) REFERENCES t_user(user_id));
 
-create table t_post(post_id int(11) primary key, 
+create table t_post(post_id int(11) primary key auto_increment, 
 					board_id int(11), 
 					topic_id int(11), 
 					user_id int(11), 
@@ -35,7 +35,7 @@ create table t_post(post_id int(11) primary key,
 					FOREIGN KEY (topic_id) REFERENCES t_topic(topic_id),
 					FOREIGN KEY (user_id) REFERENCES t_user(user_id));
 					
-create table t_login_log(login_log_id int(11) primary key, 
+create table t_login_log(login_log_id int(11) primary key auto_increment, 
 				   user_id int(11), 
 				   ip varchar(30), 
 				   login_datetime varchar(14),

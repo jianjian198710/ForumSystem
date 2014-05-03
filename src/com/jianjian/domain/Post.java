@@ -40,7 +40,7 @@ public class Post extends BaseDomain{
 	
 	@Column(name="post_text")
 	private String postText;
-	
+
 	@Column(name="board_id")
 	private int boardId;
 	
