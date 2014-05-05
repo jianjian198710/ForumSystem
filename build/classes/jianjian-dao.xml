@@ -34,14 +34,14 @@
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 			</props>
 		</property>
-		<property name="entityCacheStrategies">
+<!-- 		<property name="entityCacheStrategies">
 			<props>
 				<prop key="com.baobaotao.domain.Board">nonstrict-read-write,fixedRegion</prop>
 				<prop key="com.baobaotao.domain.User">nonstrict-read-write,freqChangeRegion</prop>
 				<prop key="com.baobaotao.domain.Topic">read-write,freqChangeRegion</prop>
 				<prop key="com.baobaotao.domain.Post">read-write,freqChangeRegion</prop>
 			</props>
-		</property>
+		</property> -->
 	</bean>
 	
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate"

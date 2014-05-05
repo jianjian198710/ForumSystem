@@ -7,6 +7,8 @@ import java.util.Date;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 
 import com.jianjian.domain.User;
@@ -19,8 +21,11 @@ public class DaoTest {
 	//≤‚ ‘UserDao
 	@Test
 	public void test() {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+		hibernateTemplate = (HibernateTemplate)ctx.getBean("hibernateTemplate");
 		User user = createUser();
 		hibernateTemplate.save(user);
+		
 	}
 
 	public User createUser(){
