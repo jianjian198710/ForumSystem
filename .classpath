@@ -31,6 +31,6 @@
 	<classpathentry kind="lib" path="H:/Developer/ThirdPartyTools/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="H:/Developer/ThirdPartyTools/aspectjweaver-1.6.9.jar"/>
 	<classpathentry kind="lib" path="H:/Developer/ThirdPartyTools/commons-dbcp2-2.0/commons-dbcp2-2.0.jar"/>
-	<classpathentry kind="lib" path="H:/Developer/ThirdPartyTools/commons-pool2-2.1/commons-pool2-2.1.jar"/>
+	<classpathentry kind="lib" path="H:/Developer/ThirdPartyTools/commons-pool2-2.2/commons-pool2-2.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
