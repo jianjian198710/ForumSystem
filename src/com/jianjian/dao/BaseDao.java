@@ -71,6 +71,7 @@ public class BaseDao<T>{
 		Assert.isTrue(pageNo >= 1, "pageNo should start from 1");
 		// Count查询,获取所有数量
 		String countQueryString = " select count (*) " + removeSelect(removeOrders(hql));
+		@SuppressWarnings("rawtypes")
 		List countlist = getHibernateTemplate().find(countQueryString, values);
 		long totalCount = (Long) countlist.get(0);
 
@@ -80,6 +81,7 @@ public class BaseDao<T>{
 		int startIndex = Page.getStartOfPage(pageNo, pageSize);
 		Query query = createQuery(hql, values);
 		//获取当前页的数据
+		@SuppressWarnings("rawtypes")
 		List list = query.setFirstResult(startIndex).setMaxResults(pageSize).list();
 
 		return new Page(startIndex, totalCount, pageSize, list);

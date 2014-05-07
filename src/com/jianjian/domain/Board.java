@@ -3,7 +3,6 @@ package com.jianjian.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +14,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -31,7 +32,8 @@ public class Board extends BaseDomain{
 	private String boardDesc;
 	@Column(name="topic_num")
 	private int topicNum;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "manBoards", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "manBoards", fetch = FetchType.EAGER)
+    @Cascade(CascadeType.SAVE_UPDATE)
 	private Set<User> users = new HashSet<User>();
 	
 	public int getBoardId(){

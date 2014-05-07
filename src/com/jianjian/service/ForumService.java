@@ -33,6 +33,7 @@ public class ForumService {
 	}
 	
 	public void addTopic(Topic topic){
+		//相关板块Topic数量+1
 		Board board = topic.getBoard();
 		board.setTopicNum(board.getTopicNum()+1);
 		boardDao.update(board);
@@ -54,11 +55,15 @@ public class ForumService {
 		System.out.println("添加Topic成功!");
 	}
 	
+	public void updateTopic(Topic topic){
+		topicDao.update(topic);
+	}
+	
 	public void removeTopic(int topicId){
 		Topic topic = topicDao.get(topicId);
 		Board board = topic.getBoard();
 		User user = topic.getUser();
-		//版块话题数-1 用户分数-10
+		//版块Board话题数-1 用户分数-10
 		board.setTopicNum(board.getTopicNum()-1);
 		user.setCredit(user.getCredit()-10);
 
@@ -67,8 +72,8 @@ public class ForumService {
 		topicDao.remove(topic);
 		
 		System.out.println("删除Topic成功");
-		//POST与Topic CascaseAll 所以会自动删除
-//		postDao.deleteTopicPosts(topicId);
+		//删除Topic的相关帖子
+		postDao.deleteTopicPosts(topicId);
 	}
 	
 	public void addPost(Post post){
@@ -83,6 +88,10 @@ public class ForumService {
 		
 		userDao.update(user);
 		topicDao.update(topic);
+	}
+	
+	public void updatePost(Post post){
+		postDao.update(post);
 	}
 	
 	public void removePost(int postId){
@@ -110,5 +119,19 @@ public class ForumService {
 		
 		userDao.update(user);
 		topicDao.update(topic);
+	}
+	
+	//加板块管理员
+	public void addBoardManager(int boardId,String userName){
+		User user = userDao.getUserByUserName(userName);
+		Board board = boardDao.get(boardId);
+		if(user==null||board==null){
+			System.out.println("没有指定User或者Board");
+		}else{
+			user.getManBoards().add(board);
+			board.getUsers().add(user);
+			userDao.update(user);
+			//cascadeType是persist merge不需要boardDao.update(board)
+		}
 	}
 }

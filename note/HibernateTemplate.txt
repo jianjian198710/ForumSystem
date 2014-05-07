@@ -1,0 +1,7 @@
+无法直接调用UserDao的save()方法来保存数据,必须通过transaction来增强管理,
+在jianjian-service.xml中将com.jianjian.service中的所有Service类中的所有方法纳入了HibernateTransactionManager管理,
+因此Service中的方法才可以直接保存到DB中
+
+References:
+1)http://justsee.iteye.com/blog/1174999
+2)http://blog.csdn.net/u012719556/article/details/22656687

@@ -1,6 +1,9 @@
 package com.jianjian.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Service;
 
 import com.jianjian.dao.LoginLogDao;
@@ -71,5 +74,19 @@ public class UserService {
 	
 	public User getUserByUserName(String userName){
 		return userDao.getUserByUserName(userName);
+	}
+	
+	public List<User> getAllUsers(){
+		return userDao.getAllUsers();
+	}
+	
+	public List<User> queryAllUsers(String userName){
+		return userDao.queryAllUsers(userName);
+	}
+	
+	//÷ª”√”⁄Unit Test 
+	public void save(Object obj){
+		HibernateTemplate hibernateTemplate = userDao.getHibernateTemplate();
+		hibernateTemplate.persist(obj);
 	}
 }

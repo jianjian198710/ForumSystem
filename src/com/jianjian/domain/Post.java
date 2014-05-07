@@ -2,7 +2,6 @@ package com.jianjian.domain;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -19,6 +18,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -51,7 +52,8 @@ public class Post extends BaseDomain{
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToOne(cascade={CascadeType.ALL})
+	@ManyToOne
+	@Cascade(CascadeType.SAVE_UPDATE)
 	@JoinColumn(name="topic_id")
 	private Topic topic;
 

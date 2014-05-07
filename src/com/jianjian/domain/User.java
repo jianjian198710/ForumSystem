@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +17,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Cache(usage=CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -59,7 +60,10 @@ public class User extends BaseDomain{
 	private Date lastVisit;
 	@Column(name="last_ip")
 	private String lastIp;
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	
+	//¹ÜÀíµÄ°å¿é
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade(CascadeType.SAVE_UPDATE)
     @JoinTable(name = "t_board_manager", joinColumns = {@JoinColumn(name ="user_id" )},inverseJoinColumns = {@JoinColumn(name = "board_id")})
 	private Set<Board> manBoards = new HashSet<Board>();
     
