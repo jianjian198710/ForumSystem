@@ -40,6 +40,7 @@ public class LoginController extends BaseController {
 	public ModelAndView login(HttpServletRequest request, @PathVariable("userName")String userName,@PathVariable("password")String password){
 		User user = userService.getUserByUserName(userName);
 		ModelAndView mav = new ModelAndView();
+		//如果触发下面三个情况,还是跳到login.jsp
 		mav.setViewName("forward:/login.jsp");
 		if(user==null){
 			System.out.println("该用户不存在!");

@@ -10,6 +10,7 @@ import com.jianjian.dao.LoginLogDao;
 import com.jianjian.dao.UserDao;
 import com.jianjian.domain.LoginLog;
 import com.jianjian.domain.User;
+import com.jianjian.exception.UserExistException;
 
 /**
  * 用户管理服务器，负责查询用户、注册用户、锁定用户等操作
@@ -25,11 +26,11 @@ public class UserService {
 	@Autowired
 	private LoginLogDao loginLogDao;
 	
-	public void register(User user){
+	public void register(User user) throws UserExistException{
 		User u = userDao.getUserByUserName(user.getUserName());
 		//如果用户已存在
 		if(u!=null){
-			System.out.println(USER_NOT_EXIST);
+			throw new UserExistException();
 		}
 		user.setCredit(100);
 		user.setUserType(User.NORMAL_USER);
@@ -38,14 +39,14 @@ public class UserService {
 		System.out.println("用户注册成功!");
 	}
 	
-	public void lockUser(String userName){
+	public void lockUser(String userName) throws UserExistException{
 		User user  = userDao.getUserByUserName(userName);
 		if(user!=null){
 			user.setLocked(User.USER_LOCK);
 			userDao.update(user);
 			System.out.println("用户已经被锁定!");
 		}else{
-			System.out.println(USER_NOT_EXIST);
+			throw new UserExistException();
 		}
 	}
 	
