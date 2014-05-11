@@ -44,28 +44,50 @@ public class ForumFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// ②-1 保证该过滤器在一次请求中只被调用一次
+		//保证该过滤器在一次请求中只被调用一次
 		if(request!=null&&request.getAttribute(FILTERED_REQUEST)!=null){
 			chain.doFilter(request, response);
 		}else{
 			request.setAttribute(FILTERED_REQUEST, Boolean.TRUE);
 			HttpServletRequest httpRequest = (HttpServletRequest)request;
 			User userContext = getSessionUser(httpRequest);
-//			if(userContext==null&&!)
 			
+			//用户未登录,且当前的URI需要登录才能访问
+			//httpRequest.getQueryString() 比如发送http://localhost/test.do?a=b&c=d&e=f得到的是a=b&c=d&e=f
+			if(userContext==null&&!isURILogin(httpRequest.getQueryString(),httpRequest)){
+				String toUrl = httpRequest.getRequestURL().toString();
+				if(httpRequest.getQueryString()!=null&&!httpRequest.getQueryString().isEmpty()){
+					toUrl+="?"+httpRequest.getQueryString();
+				}else{
+					System.out.println(httpRequest.getQueryString());
+				}
+				
+				//将用户的请求URL保存在session中,用于登录成功后,跳到目标URL
+				httpRequest.getSession().setAttribute(CommonConstant.LOGIN_TO_URL, toUrl);
+				
+				request.getRequestDispatcher("/login.jsp").forward(request, response);
+				return;
+			}
+			chain.doFilter(request, response);
 		}
-		
 	}
 	
 	protected User getSessionUser(HttpServletRequest request) {
 		return (User) request.getSession().getAttribute(CommonConstant.USER_CONTEXT);
 	}
 	
-	//当前资源是否需要登录才能访问
+	//当前资源是否需要登录才能访问 true代表不需要登录即可访问
 	private boolean isURILogin(String requestURI, HttpServletRequest request){
+		//request.getContextPath()得到的是项目的名字
 		if(request.getContextPath().equalsIgnoreCase(requestURI)||(request.getContextPath()+"/").equalsIgnoreCase(requestURI)){
-			;
+			return true;
 		}
+		for(String uri:INHERENT_ESCAPE_URIS){
+			if(requestURI!=null && requestURI.indexOf(uri)>=0){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 
