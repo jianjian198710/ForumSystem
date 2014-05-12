@@ -15,20 +15,21 @@
 <c:if test="${!empty errorMsg}">
   <div style="color:red">${errorMsg}</div>
 </c:if>
-<form action="${context}/login/doLogin.html" method="post">
+<form action="<c:url value="/login/doLogin.html"/>" method="post">
 <table border="1px">
 	<tr>
-		<td width="20%">用户名</td>
-		<td width="80%"><input type="text" name="userName"/></td>
+		<td width="30%">用户名</td>
+		<td width="70%"><input type="text" name="userName"/></td>
 	</tr>
 	<tr>
-		<td width="20%">密码</td>
-		<td width="80%"><input type="password" name="password"/></td>
+		<td width="30%">密码</td>
+		<td width="70%"><input type="password" name="password"/></td>
 	</tr>
 	<tr>
 		<td colspan="2">
 		   <input type="submit" value="登录">
 		   <input type="reset" value="重置">
+		   <input type="submit" name="regist" value="注册">
 		</td>
 	</tr>
 </table>

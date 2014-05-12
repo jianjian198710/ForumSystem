@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,15 +36,20 @@ public class LoginController extends BaseController {
 	private UserService userService;
 	
 	@RequestMapping(value="/doLogin",method=RequestMethod.POST)
-	public ModelAndView login(HttpServletRequest request, @PathVariable("userName")String userName,@PathVariable("password")String password){
+	public ModelAndView login(HttpServletRequest request, String userName,String password){
+		System.out.println("进入LoginController");
 		User user = userService.getUserByUserName(userName);
+		System.out.println(user);
 		ModelAndView mav = new ModelAndView();
 		//如果触发下面三个情况,还是跳到login.jsp
 		mav.setViewName("forward:/login.jsp");
-		if(user==null){
+		if(request.getParameter("regist")!=null){
+			System.out.println("没有用户名,开始注册");
+			mav.setViewName("forward:/register.jsp");
+		}else if(user==null){
 			System.out.println("该用户不存在!");
 			mav.addObject("errorMsg", "该用户不存在!");
-		}else if(user.getPassword()!=password){
+		}else if(!user.getPassword().equals(password)){
 			System.out.println("密码错误!");
 			mav.addObject("errorMsg", "密码错误!");
 		}else if(user.getLocked()==User.USER_LOCK){

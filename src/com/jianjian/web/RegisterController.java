@@ -20,6 +20,7 @@ public class RegisterController extends BaseController{
 	
 	@RequestMapping(value="/register",method = RequestMethod.POST)
 	public ModelAndView register(HttpServletRequest request, User user){
+		System.out.println("Ω¯»ÎRegisterController,userName:"+user.getUserName());
 		ModelAndView view = new ModelAndView();
 		view.setViewName("/success");
 		try{

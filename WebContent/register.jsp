@@ -9,11 +9,15 @@
 <title>用户注册</title>
 <script>
    function mycheck(){
-      if(document.all("user.password").value != document.all("again").value){
+	  var password = document.getElementById("password");
+	  var again = document.getElementById("again");
+	  if(password.value==null||password.value==""){
+		  alert("密码不能为空");
+		  return false;
+	  }else if(password.value != again.value){
          alert("两次输入的密码不正确，请更正。");
          return false;
-      }else
-      {
+      }else{
          return true;
       }
    }
@@ -23,7 +27,7 @@
 用户注册信息：
 <form action="<c:url value="/register.html" />" method="post" onsubmit="return mycheck()">
 <c:if test="${!empty errorMsg}">
-   <div style="color=red">${errorMsg}</div>
+   <div style="color:red">${errorMsg}</div>
 </c:if>
 <table border="1px" width="60%">
 	<tr>
@@ -34,11 +38,11 @@
 	</tr>
 	<tr>
 		<td width="20%">密码</td>
-		<td width="80%"><input type="password" name="password"/></td>
+		<td width="80%"><input type="password" id="password" name="password"/></td>
 	</tr>
 	<tr>
 		<td width="20%">密码确认</td>
-		<td width="80%"><input type="password" name="again"></td>
+		<td width="80%"><input type="password" id="again" name="again"></td>
 	</tr>
 	<tr>
 		<td colspan="2">

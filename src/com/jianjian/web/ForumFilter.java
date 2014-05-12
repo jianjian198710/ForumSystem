@@ -46,8 +46,14 @@ public class ForumFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		//保证该过滤器在一次请求中只被调用一次
 		if(request!=null&&request.getAttribute(FILTERED_REQUEST)!=null){
+			System.out.println(request);
+			System.out.println(request.getAttribute(FILTERED_REQUEST));
+			System.out.println("该request的Filter已调用");
 			chain.doFilter(request, response);
 		}else{
+			System.out.println(request);
+			System.out.println(request.getAttribute(FILTERED_REQUEST));
+			System.out.println("该request的Filter未调用");
 			request.setAttribute(FILTERED_REQUEST, Boolean.TRUE);
 			HttpServletRequest httpRequest = (HttpServletRequest)request;
 			User userContext = getSessionUser(httpRequest);
@@ -58,13 +64,10 @@ public class ForumFilter implements Filter {
 				String toUrl = httpRequest.getRequestURL().toString();
 				if(httpRequest.getQueryString()!=null&&!httpRequest.getQueryString().isEmpty()){
 					toUrl+="?"+httpRequest.getQueryString();
-				}else{
-					System.out.println(httpRequest.getQueryString());
 				}
 				
 				//将用户的请求URL保存在session中,用于登录成功后,跳到目标URL
 				httpRequest.getSession().setAttribute(CommonConstant.LOGIN_TO_URL, toUrl);
-				
 				request.getRequestDispatcher("/login.jsp").forward(request, response);
 				return;
 			}
