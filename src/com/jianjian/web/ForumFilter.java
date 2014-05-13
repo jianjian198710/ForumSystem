@@ -45,19 +45,16 @@ public class ForumFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest httpRequest = (HttpServletRequest)request;
+		HttpSession session = httpRequest.getSession();
 		//保证该过滤器在一次请求中只被调用一次
-		if(request!=null&&request.getAttribute(FILTERED_REQUEST)!=null){
+		if(session.getAttribute(FILTERED_REQUEST)!=null){
 			System.out.println("该session的Filter已调用");
-			System.out.println(request);
-			System.out.println(request.getAttribute(FILTERED_REQUEST));
+			System.out.println(session.getAttribute(FILTERED_REQUEST));
 			chain.doFilter(request, response);
 		}else{
-			System.out.println("该request的Filter未调用");
-			System.out.println(request);
-			System.out.println(request.getAttribute(FILTERED_REQUEST));
-			request.setAttribute(FILTERED_REQUEST, Boolean.TRUE);
-			System.out.println(request.getAttribute(FILTERED_REQUEST));
-			HttpServletRequest httpRequest = (HttpServletRequest)request;
+			System.out.println("该session的Filter未调用");
+			session.setAttribute(FILTERED_REQUEST, Boolean.TRUE);
 			User userContext = getSessionUser(httpRequest);
 			
 			//用户未登录,且当前的URI需要登录才能访问

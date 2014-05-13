@@ -66,7 +66,7 @@ public class LoginController extends BaseController {
 			if(StringUtils.isEmpty(toUrl)){
 				toUrl = "/WEB-INF/jsp/listAllBoards.jsp";
 			}
-			mav.setViewName("redirect:"+toUrl);
+			mav.setViewName("forward:"+toUrl);
 		}
 		return mav;
 	}
