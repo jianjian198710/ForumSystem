@@ -64,7 +64,7 @@ public class LoginController extends BaseController {
 			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
 			//如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
 			if(StringUtils.isEmpty(toUrl)){
-				toUrl = "/index.html";
+				toUrl = "/WEB-INF/jsp/listAllBoards.jsp";
 			}
 			mav.setViewName("redirect:"+toUrl);
 		}

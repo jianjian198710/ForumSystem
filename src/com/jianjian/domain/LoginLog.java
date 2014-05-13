@@ -18,7 +18,7 @@ public class LoginLog extends BaseDomain{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="log_login_id")
+	@Column(name="login_log_id")
 	private int loginLogId;
 	
 	@ManyToOne

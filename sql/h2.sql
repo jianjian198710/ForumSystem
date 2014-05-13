@@ -37,8 +37,8 @@ create table t_post(post_id int(11) primary key auto_increment,
 					
 create table t_login_log(login_log_id int(11) primary key auto_increment, 
 				   user_id int(11), 
-				   ip varchar(30), 
-				   login_datetime varchar(14),
+				   ip varchar(30),
+				   login_datetime varchar(50),
 				   FOREIGN KEY (user_id) REFERENCES t_user(user_id));
 
 create table t_board_manager(board_id int(11), 
