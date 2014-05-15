@@ -87,7 +87,10 @@ public class UserService {
 	
 	//Ö»ÓÃÓÚUnit Test 
 	public void save(Object obj){
-		HibernateTemplate hibernateTemplate = userDao.getHibernateTemplate();
-		hibernateTemplate.persist(obj);
+		userDao.getHibernateTemplate().save(obj);
+	}
+	
+	public void update(User user){
+		userDao.update(user);
 	}
 }

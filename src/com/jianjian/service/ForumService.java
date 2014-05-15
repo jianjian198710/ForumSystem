@@ -1,6 +1,7 @@
 package com.jianjian.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.jianjian.domain.MainPost;
 import com.jianjian.domain.Post;
 import com.jianjian.domain.Topic;
 import com.jianjian.domain.User;
+import com.jianjian.exception.NoUserOrBoardException;
 
 @Service
 public class ForumService {
@@ -122,16 +124,20 @@ public class ForumService {
 	}
 	
 	//加板块管理员
-	public void addBoardManager(int boardId,String userName){
+	public void addBoardManager (int boardId,String userName)throws NoUserOrBoardException{
 		User user = userDao.getUserByUserName(userName);
 		Board board = boardDao.get(boardId);
 		if(user==null||board==null){
-			System.out.println("没有指定User或者Board");
+			throw new NoUserOrBoardException("没有指定User或者Board");
 		}else{
 			user.getManBoards().add(board);
 			board.getUsers().add(user);
 			userDao.update(user);
 			//cascadeType是persist merge不需要boardDao.update(board)
 		}
+	}
+	
+	public List<Board> listAllBoards(){
+		return boardDao.getAllBoards();
 	}
 }
