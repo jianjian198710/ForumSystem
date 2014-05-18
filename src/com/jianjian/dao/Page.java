@@ -9,7 +9,7 @@ public class Page implements Serializable{
 	
 	private static int DEFAULT_PAGE_SIZE = 20;
 	private int pageSize = DEFAULT_PAGE_SIZE;
-	private long start;//当前页第一条数据在List中的位置,从0开始
+	private long start;//当前页第一条数据在整个List中的位置,从0开始
 	private List data;//当前页中存放的记录
 	private long totalCount;//总记录数
 	
@@ -24,6 +24,7 @@ public class Page implements Serializable{
 		this.data =data;
 	}
 	
+	//总共有多少页
 	public long getTotalPageCount(){
 		if(totalCount % pageSize ==0){
 			return totalCount/pageSize;
@@ -32,6 +33,7 @@ public class Page implements Serializable{
 		}
 	}
 	
+	//当前是多少页
 	public long getCurrentPageNum(){
 		return start/pageSize + 1;
 	}

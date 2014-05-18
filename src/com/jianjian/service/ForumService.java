@@ -57,6 +57,10 @@ public class ForumService {
 		System.out.println("添加Topic成功!");
 	}
 	
+	public Board getBoardById(int boardId){
+		return boardDao.get(boardId);
+	}
+	
 	public void updateTopic(Topic topic){
 		topicDao.update(topic);
 	}
@@ -76,6 +80,10 @@ public class ForumService {
 		System.out.println("删除Topic成功");
 		//删除Topic的相关帖子
 		postDao.deleteTopicPosts(topicId);
+	}
+	
+	public Topic getTopicByTopicId(int topicId){
+		return topicDao.get(topicId);
 	}
 	
 	public void addPost(Post post){
@@ -139,5 +147,35 @@ public class ForumService {
 	
 	public List<Board> listAllBoards(){
 		return boardDao.getAllBoards();
+	}
+	
+	/**
+	 * 获取论坛版块某一页主题帖，以最后回复时间降序排列
+	 * @param boardId
+	 * @return
+	 */
+    public Page getPagedTopics(int boardId,int pageNo,int pageSize){
+		return topicDao.getPagedTopics(boardId,pageNo,pageSize);
+    }
+    
+    /**
+     * 获取同主题每一页帖子，以最后回复时间降序排列
+     * @param boardId
+     * @return
+     */
+    public Page getPagedPosts(int topicId,int pageNo,int pageSize){
+        return postDao.getPagedPosts(topicId,pageNo,pageSize);
+    }    
+    
+
+	/**
+	 * 查找出所有包括标题包含title的主题帖
+	 * 
+	 * @param title
+	 *            标题查询条件
+	 * @return 标题包含title的主题帖
+	 */
+	public Page queryTopicByTitle(String title,int pageNo,int pageSize) {
+		return topicDao.queryTopicByTitle(title,pageNo,pageSize);
 	}
 }

@@ -23,7 +23,7 @@
 		  p:basename="i18n/messages" />
 
     <!--WEB异常解析处理-->
-<!-- 	<bean id="exceptionResolver" class="com.jianjian.web.ForumHandlerExceptionResolver">
+	<bean id="exceptionResolver" class="com.jianjian.web.ForumHandlerExceptionResolver">
 		<property name="defaultErrorView">
 			<value>fail</value>
 		</property>
@@ -32,5 +32,5 @@
 				<prop key="java.lang.RuntimeException">fail</prop>
 			</props>
 		</property>
-	</bean> -->
+	</bean>
 </beans>  

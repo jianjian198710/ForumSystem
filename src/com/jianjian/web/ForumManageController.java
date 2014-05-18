@@ -43,6 +43,17 @@ public class ForumManageController extends BaseController{
 	 * @param response
 	 * @return
 	 */
+	@RequestMapping(value = "/forum/addBoardPage", method = RequestMethod.GET)
+	public String addBoardPage() {
+		return "/addBoard";
+	}
+	
+	/**
+	 *  添加一个主题帖
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "/forum/addBoard", method = RequestMethod.POST)
 	public String addBoard(Board board) {
 		forumService.addBoard(board);
