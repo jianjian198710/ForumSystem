@@ -50,26 +50,24 @@ public class ForumFilter implements Filter {
 		//保证该过滤器在一次请求中只被调用一次
 		if(session.getAttribute(FILTERED_REQUEST)!=null){
 			System.out.println("该session的Filter已调用");
-			System.out.println(session.getAttribute(FILTERED_REQUEST));
 			chain.doFilter(request, response);
 		}else{
 			System.out.println("该session的Filter未调用");
 			session.setAttribute(FILTERED_REQUEST, Boolean.TRUE);
 			User userContext = getSessionUser(httpRequest);
+			System.out.println(userContext);
 			
 			//用户未登录,且当前的URI需要登录才能访问
 			//httpRequest.getQueryString() 比如发送http://localhost/test.do?a=b&c=d&e=f得到的是a=b&c=d&e=f
 			if(userContext==null&&!isURILogin(httpRequest.getQueryString(),httpRequest)){
-				System.out.println("bbb");
+				System.out.println("AAA");
 				String toUrl = httpRequest.getRequestURL().toString();
 				if(httpRequest.getQueryString()!=null&&!httpRequest.getQueryString().isEmpty()){
 					toUrl+="?"+httpRequest.getQueryString();
-					System.out.println("aaa");
 				}
 				
 				//将用户的请求URL保存在session中,用于登录成功后,跳到目标URL
 				httpRequest.getSession().setAttribute(CommonConstant.LOGIN_TO_URL, toUrl);
-				System.out.println("ccc");
 				request.getRequestDispatcher("/login.jsp").forward(request, response);
 				return;
 			}

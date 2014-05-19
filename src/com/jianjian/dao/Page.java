@@ -24,6 +24,20 @@ public class Page implements Serializable{
 		this.data =data;
 	}
 	
+	/**
+	 * 取总记录数.
+	 */
+	public long getTotalCount() {
+		return this.totalCount;
+	}
+
+	/**
+	 * 取每页数据容量.
+	 */
+	public int getPageSize() {
+		return pageSize;
+	}
+	
 	//总共有多少页
 	public long getTotalPageCount(){
 		if(totalCount % pageSize ==0){
@@ -33,6 +47,13 @@ public class Page implements Serializable{
 		}
 	}
 	
+	/**
+	 * 取当前页中的记录.
+	 */
+	public List getResult() {
+		return data;
+	}
+
 	//当前是多少页
 	public long getCurrentPageNum(){
 		return start/pageSize + 1;
@@ -64,5 +85,9 @@ public class Page implements Serializable{
 	 */
 	public static int getStartOfPage(int pageNo, int pageSize) {
 		return (pageNo - 1) * pageSize;
+	}
+
+	public List getData(){
+		return data;
 	}
 }

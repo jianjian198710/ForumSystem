@@ -70,7 +70,7 @@
 					<c:set var="isboardManager" value="${true}" />
 				</c:if>
 			</c:forEach> 
-			<c:forEach var="topic" items="${pagedTopic.result}">
+			<c:forEach var="topic" items="${pagedTopic.data}">
 				<tr>
 				    <c:if test="${USER_CONTEXT.userType == 2 || isboardManager}">
 			          <td><input type="checkbox" name="topicIds" value="${topic.topicId}"/></td>

@@ -7,14 +7,18 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.jianjian.dao.Page;
 import com.jianjian.domain.Board;
+import com.jianjian.domain.Topic;
 import com.jianjian.domain.User;
+import com.jianjian.service.ForumService;
 import com.jianjian.service.UserService;
 
 public class DaoTest {
 	//≤‚ ‘UserDao.getAllUsers()
 	@Test
 	public void testGetAllUsers() {
+		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 		UserService userService = (UserService)ctx.getBean("userService");
 		List<User> users = userService.getAllUsers();
@@ -34,6 +38,22 @@ public class DaoTest {
 		}
 	}
 
+	@Test
+	public void testGetTopicsFromBoardId(){
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ForumService forumService = (ForumService)ctx.getBean("forumService");
+		Board board = createBoard();
+		Topic topic = createTopic();
+		topic.setBoard(board);
+		forumService.addBoard(board);
+		forumService.addTopic(topic);
+//		@SuppressWarnings("unchecked")
+//		List<Topic> topics = forumService.getPagedTopics(board.getBoardId(),1,20).getResult();
+//		for(Topic top:topics){
+//			System.out.println(top.getCreateTime());
+//		}
+	}
+	
 	public User createUser(){
 		User user = new User();
 		user.setUserName("jianjian");
@@ -52,5 +72,15 @@ public class DaoTest {
 		board.setBoardName("Fuck");
 		board.setTopicNum(20);
 		return board;
+	}
+	
+	public Topic createTopic(){
+		Topic topic = new Topic();
+		topic.setCreateTime(new Date());
+		topic.setDigest(1);
+		topic.setLastPost(new Date());
+		topic.setReplies(1);
+		topic.setTopicTitle("AAA");
+		return topic;
 	}
 }
