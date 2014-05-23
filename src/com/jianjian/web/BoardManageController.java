@@ -58,6 +58,7 @@ public class BoardManageController extends BaseController{
 	 */
 	@RequestMapping(value = "/board/addTopicPage-{boardId}", method = RequestMethod.GET)
 	public ModelAndView addTopicPage(@PathVariable Integer boardId) {
+		System.out.println("进入BoardManageController.addTopicPage(),boardId="+boardId);
 		ModelAndView view =new ModelAndView();
 		view.addObject("boardId", boardId);
 		view.setViewName("/addTopic");
@@ -65,9 +66,14 @@ public class BoardManageController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/board/addTopic", method = RequestMethod.POST)
-	public String addTopicPage(HttpServletRequest request,Topic topic){
+	public String addTopic(HttpServletRequest request,Topic topic, @RequestParam("boardId")Integer boardId){
+		System.out.println("进入BoardManageController.addTopic()");
 		User user = getSessionUser(request);
+		Board board = forumService.getBoardById(boardId);
+		System.out.println(user);
+		System.out.println(board);
 		topic.setUser(user);
+		topic.setBoard(board);
 		Date date = new Date();
 		topic.setCreateTime(date);
 		topic.setLastPost(date);
@@ -87,8 +93,11 @@ public class BoardManageController extends BaseController{
 	 */
 	@RequestMapping(value = "/board/listTopicPosts-{topicId}", method = RequestMethod.GET)
 	public ModelAndView listTopicPosts(@PathVariable Integer topicId,@RequestParam(value = "pageNo", required = false) Integer pageNo) {
+		System.out.println("进入BoardManageController.listTopicPosts()");
+		System.out.println("TopicId: "+topicId);
 		ModelAndView view =new ModelAndView();
 		Topic topic = forumService.getTopicByTopicId(topicId);
+		System.out.println("Topic: "+topic);
 		pageNo = pageNo==null?1:pageNo;
 		Page pagedPost = forumService.getPagedPosts(topicId, pageNo,
 				CommonConstant.PAGE_SIZE);

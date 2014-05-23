@@ -11,14 +11,21 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.jianjian.cons.CommonConstant;
 import com.jianjian.domain.User;
+import com.jianjian.service.UserService;
 
 /**
  * Servlet Filter implementation class ForumFilter
  */
 @WebFilter("/ForumFilter")
 public class ForumFilter implements Filter {
+	
+	@Autowired
+	private UserService userService;
+	
 	private static final String FILTERED_REQUEST = "@@session_context_filtered_request";
 	
 	// ① 不需要登录即可访问的URI资源
@@ -59,9 +66,9 @@ public class ForumFilter implements Filter {
 			
 			//用户未登录,且当前的URI需要登录才能访问
 			//httpRequest.getQueryString() 比如发送http://localhost/test.do?a=b&c=d&e=f得到的是a=b&c=d&e=f
-			if(userContext==null&&!isURILogin(httpRequest.getQueryString(),httpRequest)){
+			if(userContext==null&&!isURILogin(httpRequest.getRequestURI(),httpRequest)){
 				System.out.println("AAA");
-				String toUrl = httpRequest.getRequestURL().toString();
+				String toUrl = httpRequest.getRequestURI().toString();
 				if(httpRequest.getQueryString()!=null&&!httpRequest.getQueryString().isEmpty()){
 					toUrl+="?"+httpRequest.getQueryString();
 				}

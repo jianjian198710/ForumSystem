@@ -8,7 +8,7 @@
 <title>操作成功</title>
 </head>
 <body>
-    操作成功!你希望<a href="<c:url value="/forumManage.do?method=addBoardPage"/>">再次添加</a> 
+    操作成功!你希望<a href="<c:url value="/forum/addBoardPage.html"/>">再次添加</a> 
     或者<a href="<c:url value="/index.jsp"/>">返回首页</a>
 </body>
 </html>

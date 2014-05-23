@@ -64,6 +64,7 @@ public class LoginController extends BaseController {
 			setSessionUser(request,user);
 			String toUrl = (String)request.getSession().getAttribute(CommonConstant.LOGIN_TO_URL);
 			request.getSession().removeAttribute(CommonConstant.LOGIN_TO_URL);
+			System.out.println("toUrl is"+toUrl);
 			//如果当前会话中没有保存登录之前的请求URL，则直接跳转到主页
 			if(StringUtils.isEmpty(toUrl)){
 				System.out.println("toUrl is empty");

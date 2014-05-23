@@ -67,7 +67,7 @@
 		<td colspan="2" align="right">
 		   <input type="submit" value="保存">
 		   <input type="reset" value="重置">
-		   <input type="hidden" name="boardId" value="${topic.boardId}"/>
+		   <input type="hidden" name="boardId" value="${topic.board.boardId}"/>
 		   <input type="hidden" name="topic.topicId" value="${topic.topicId}"/>
 		</td>
 	</tr>
