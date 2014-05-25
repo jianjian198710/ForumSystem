@@ -87,12 +87,16 @@ public class ForumService {
 	}
 	
 	public void addPost(Post post){
+		System.out.println("进入ForumService.addPost()");
 		postDao.save(post);
 		Topic topic = post.getTopic();
+		System.out.println("Topic: "+topic);
 		User user = post.getUser();
-		
+		System.out.println("User: "+user);
+
 		//用户分数+5 主题回复数+1 更新话题最后回复时间
 		user.setCredit(user.getCredit()+5);
+
 		topic.setReplies(topic.getReplies()+1);
 		topic.setLastPost(new Date());
 		

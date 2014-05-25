@@ -74,4 +74,10 @@ public class LoginController extends BaseController {
 		}
 		return mav;
 	}
+	
+	@RequestMapping(value="/doLogout")
+	public String logout(HttpServletRequest request){
+		request.getSession().removeAttribute(CommonConstant.USER_CONTEXT);
+		return "forward:/index.jsp";
+	}
 }

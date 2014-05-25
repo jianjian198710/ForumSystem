@@ -90,6 +90,9 @@ public class ForumManageController extends BaseController{
 	@RequestMapping(value = "/forum/setBoardManager", method = RequestMethod.POST)
 	public ModelAndView setBoardManager(@RequestParam("userName") String userName
 			,@RequestParam("boardId") String boardId) {
+		System.out.println("Ω¯»ÎForumManageController.setBoardManager()");
+		System.out.println("userName£∫"+userName);
+		System.out.println("boardId: "+boardId);
 		ModelAndView view =new ModelAndView();
 		try{
 			forumService.addBoardManager(Integer.parseInt(boardId), userName);

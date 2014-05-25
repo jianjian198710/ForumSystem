@@ -1,6 +1,8 @@
 package com.jianjian.web;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,11 +74,22 @@ public class BoardManageController extends BaseController{
 		Board board = forumService.getBoardById(boardId);
 		System.out.println(user);
 		System.out.println(board);
+		
+		Set<User> users = board.getUsers();
+		Iterator<User> it = users.iterator();
 		topic.setUser(user);
+		while(it.hasNext()){
+			User userInBoard = it.next();
+			if(userInBoard.getUserId()==user.getUserId()){
+				System.out.println("找到相同的User");
+				topic.setUser(userInBoard);
+			}
+		}
 		topic.setBoard(board);
 		Date date = new Date();
 		topic.setCreateTime(date);
 		topic.setLastPost(date);
+		System.out.println("Topic："+topic);
 		forumService.addTopic(topic);
 		String targetUrl = "/board/listBoardTopics-" + topic.getBoard().getBoardId()
 				+ ".html";
@@ -117,9 +130,20 @@ public class BoardManageController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/board/addPost")
-	public String addPost(HttpServletRequest request, Post post) {
+	public String addPost(HttpServletRequest request, Post post, @RequestParam("topic.topicId") Integer topicId){
+		System.out.println("进入BoardManageController.addPost()方法");
+		System.out.println("TopicId: "+topicId);
+		Topic topic  = forumService.getTopicByTopicId(topicId);
+		post.setTopic(topic);
 		post.setCreateTime(new Date());
-		post.setUser(getSessionUser(request));
+		//防止userDao Session中同时存在两个相同User(分别是Topic中的User和HttpSession中的User,以至forumService.addPost中userDao.update(user)报Exception
+		if(topic.getUser().getUserId()==getSessionUser(request).getUserId()){
+			System.out.println("会引发userDao的Session中存在两个相同的user");
+			post.setUser(topic.getUser());
+		}else{
+			post.setUser(getSessionUser(request));
+		}
+		System.out.println("Post: "+post);
 		forumService.addPost(post);
 		String targetUrl = "/board/listTopicPosts-"
 				+ post.getTopic().getTopicId() + ".html";

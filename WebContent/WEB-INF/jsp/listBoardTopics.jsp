@@ -72,10 +72,10 @@
 			</c:forEach> 
 			<c:forEach var="topic" items="${pagedTopic.data}">
 				<tr>
-				    <c:if test="${USER_CONTEXT.userType == 2 || isboardManager}">
-			          <td><input type="checkbox" name="topicIds" value="${topic.topicId}"/></td>
-			        </c:if>
 					<td>
+						<c:if test="${USER_CONTEXT.userType == 2 || isboardManager}">
+				          <input type="checkbox" name="topicIds" value="${topic.topicId}"/>
+				        </c:if>
 						<a  href="<c:url value="/board/listTopicPosts-${topic.topicId}.html"/>">
 							<c:if test="${topic.digest > 0}">
 							  <font color=red>★</font>
